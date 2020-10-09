@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
+import { useAppContext } from '../state/appContext';
 
 import './SignIn.css';
 
 export const SignIn = () => {
+  const { setIsAuthenticated } = useAppContext();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -17,7 +19,7 @@ export const SignIn = () => {
 
     try {
       await Auth.signIn(email, password);
-      alert('Logged in');
+      setIsAuthenticated(true);
     } catch (e) {
       alert(e.message);
     }
@@ -46,7 +48,7 @@ export const SignIn = () => {
         </Form.Group>
 
         <Button block type="submit" disabled={!validate()}>
-          Login
+          Sign In
         </Button>
       </Form>
     </div>
