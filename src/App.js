@@ -6,6 +6,7 @@ import { Home } from './containers/Home';
 import { NotFound } from './containers/NotFound';
 
 import './App.css';
+import { SignIn } from './containers/SignIn';
 
 function App() {
   const navigate = useNavigate();
@@ -30,6 +31,9 @@ function App() {
       <Routes>
         <Route path="/">
           <Home />
+        </Route>
+        <Route path="/sign-in">
+          <SignIn />
         </Route>
         <Route path="*">
           <NotFound />
