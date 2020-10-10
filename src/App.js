@@ -32,7 +32,8 @@ function App() {
     authenticate();
   }, []);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await Auth.signOut();
     setIsAuthenticated(false);
   };
 
