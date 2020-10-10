@@ -6,18 +6,21 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../state/appContext';
 import { LoadingButton } from '../components/LoadingButton';
 import { Errors } from '../utils/errors';
+import { useFormFields } from '../hooks/useFormFields';
 
 import './SignIn.css';
 
 export const SignIn = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAppContext();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    email: '',
+    password: '',
+  });
 
-  const validate = () => {
-    return email.length > 0 && password.length > 0;
+  const validateForm = () => {
+    return fields.email.length > 0 && fields.password.length > 0;
   };
 
   const handleSubmit = async (e) => {
@@ -25,7 +28,7 @@ export const SignIn = () => {
 
     try {
       setIsLoading(true);
-      await Auth.signIn(email, password);
+      await Auth.signIn(fields.email, fields.password);
       setIsAuthenticated(true);
       navigate('/');
     } catch (e) {
@@ -42,8 +45,8 @@ export const SignIn = () => {
           <Form.Control
             autoFocus
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={fields.email}
+            onChange={handleFieldChange}
           />
         </Form.Group>
 
@@ -51,8 +54,8 @@ export const SignIn = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={fields.password}
+            onChange={handleFieldChange}
           />
         </Form.Group>
 
@@ -60,7 +63,7 @@ export const SignIn = () => {
           block
           type="submit"
           loading={isLoading}
-          disabled={!validate()}
+          disabled={!validateForm()}
         >
           Sign In
         </LoadingButton>
