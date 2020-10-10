@@ -10,6 +10,8 @@ import { AppContext } from './state/appContext';
 import { Errors } from './utils/errors';
 import { SignUp } from './containers/SignUp';
 import { NewNote } from './containers/NewNote';
+import { AuthenticatedRoute } from './components/AuthenticatedRoute';
+import { UnauthenticatedRoute } from './components/UnauthenticatedRoute';
 
 import './App.css';
 import { Note } from './containers/Note';
@@ -72,21 +74,23 @@ function App() {
 
         <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
           <Routes>
-            <Route path="/">
+            <AuthenticatedRoute path="/">
               <Home />
-            </Route>
-            <Route path="/sign-in">
-              <SignIn />
-            </Route>
-            <Route path="/sign-up">
-              <SignUp />
-            </Route>
-            <Route path="/notes/new">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/notes/new">
               <NewNote />
-            </Route>
-            <Route path="/notes/:id">
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path="/notes/:id">
               <Note />
-            </Route>
+            </AuthenticatedRoute>
+
+            <UnauthenticatedRoute path="/sign-in">
+              <SignIn />
+            </UnauthenticatedRoute>
+            <UnauthenticatedRoute path="/sign-up">
+              <SignUp />
+            </UnauthenticatedRoute>
+
             <Route path="*">
               <NotFound />
             </Route>

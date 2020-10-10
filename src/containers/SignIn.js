@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
-import { useNavigate } from 'react-router-dom';
 
 import { useAppContext } from '../state/appContext';
 import { LoadingButton } from '../components/LoadingButton';
@@ -11,7 +10,6 @@ import { useFormFields } from '../hooks/useFormFields';
 import './SignIn.css';
 
 export const SignIn = () => {
-  const navigate = useNavigate();
   const { setIsAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -30,7 +28,6 @@ export const SignIn = () => {
       setIsLoading(true);
       await Auth.signIn(fields.email, fields.password);
       setIsAuthenticated(true);
-      navigate('/');
     } catch (e) {
       Errors.handle(e);
       setIsLoading(false);
