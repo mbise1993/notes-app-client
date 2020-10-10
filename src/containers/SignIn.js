@@ -1,14 +1,20 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Auth } from 'aws-amplify';
+import { useNavigate } from 'react-router-dom';
+
 import { useAppContext } from '../state/appContext';
+import { LoadingButton } from '../components/LoadingButton';
+import { Errors } from '../utils/errors';
 
 import './SignIn.css';
 
 export const SignIn = () => {
+  const navigate = useNavigate();
   const { setIsAuthenticated } = useAppContext();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const validate = () => {
     return email.length > 0 && password.length > 0;
@@ -18,10 +24,13 @@ export const SignIn = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       await Auth.signIn(email, password);
       setIsAuthenticated(true);
+      navigate('/');
     } catch (e) {
-      alert(e.message);
+      Errors.handle(e);
+      setIsLoading(false);
     }
   };
 
@@ -47,9 +56,14 @@ export const SignIn = () => {
           />
         </Form.Group>
 
-        <Button block type="submit" disabled={!validate()}>
+        <LoadingButton
+          block
+          type="submit"
+          loading={isLoading}
+          disabled={!validate()}
+        >
           Sign In
-        </Button>
+        </LoadingButton>
       </Form>
     </div>
   );

@@ -5,10 +5,11 @@ import { Auth } from 'aws-amplify';
 
 import { Home } from './containers/Home';
 import { NotFound } from './containers/NotFound';
-
-import './App.css';
 import { SignIn } from './containers/SignIn';
 import { AppContext } from './state/appContext';
+import { Errors } from './utils/errors';
+
+import './App.css';
 
 function App() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function App() {
         setIsAuthenticated(true);
       } catch (e) {
         if (e !== 'No current user') {
-          alert(e);
+          Errors.handle(e);
         }
       }
 
@@ -35,6 +36,7 @@ function App() {
   const handleSignOut = async () => {
     await Auth.signOut();
     setIsAuthenticated(false);
+    navigate('/sign-in');
   };
 
   return (
