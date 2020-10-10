@@ -6,6 +6,7 @@ import { Form } from 'react-bootstrap';
 import { Errors } from '../utils/errors';
 import config from '../config';
 import { LoadingButton } from '../components/LoadingButton';
+import { StorageApi } from '../api/storageApi';
 
 import './Note.css';
 
@@ -60,7 +61,25 @@ export const Note = () => {
       return;
     }
 
-    setIsLoading(true);
+    try {
+      let attachment = null;
+      setIsLoading(true);
+      if (file.current) {
+        attachment = await StorageApi.s3Upload(file.current);
+      }
+
+      await API.put('notes', `/notes/${id}`, {
+        body: {
+          content,
+          attachment: attachment || note.attachment,
+        },
+      });
+
+      navigate('/');
+    } catch (e) {
+      Errors.handle(e);
+      setIsLoading(false);
+    }
   };
 
   const handleDelete = async (e) => {
