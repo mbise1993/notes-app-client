@@ -8,6 +8,7 @@ import { NotFound } from './containers/NotFound';
 import { SignIn } from './containers/SignIn';
 import { AppContext } from './state/appContext';
 import { Errors } from './utils/errors';
+import { SignUp } from './containers/SignUp';
 
 import './App.css';
 
@@ -74,6 +75,9 @@ function App() {
             </Route>
             <Route path="/sign-in">
               <SignIn />
+            </Route>
+            <Route path="/sign-up">
+              <SignUp />
             </Route>
             <Route path="*">
               <NotFound />
