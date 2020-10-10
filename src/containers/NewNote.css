@@ -1,0 +1,12 @@
+.new-note {
+  padding-top: 15px;
+}
+
+.new-note form {
+  padding-bottom: 15px;
+}
+
+.new-note form textarea {
+  height: 300px;
+  font-size: 24px;
+}

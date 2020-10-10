@@ -9,6 +9,7 @@ import { SignIn } from './containers/SignIn';
 import { AppContext } from './state/appContext';
 import { Errors } from './utils/errors';
 import { SignUp } from './containers/SignUp';
+import { NewNote } from './containers/NewNote';
 
 import './App.css';
 
@@ -78,6 +79,9 @@ function App() {
             </Route>
             <Route path="/sign-up">
               <SignUp />
+            </Route>
+            <Route path="/notes/new">
+              <NewNote />
             </Route>
             <Route path="*">
               <NotFound />
