@@ -6,6 +6,7 @@ import { API } from 'aws-amplify';
 import config from '../config';
 import { LoadingButton } from '../components/LoadingButton';
 import { Errors } from '../utils/errors';
+import { StorageApi } from '../api/storageApi';
 
 import './NewNote.css';
 
@@ -38,8 +39,16 @@ export const NewNote = () => {
 
     try {
       setIsLoading(true);
+
+      const attachment = file.current
+        ? await StorageApi.s3Upload(file.current)
+        : null;
+
       await API.post('notes', '/notes', {
-        body: { content },
+        body: {
+          content,
+          attachment,
+        },
       });
 
       navigate('/');
