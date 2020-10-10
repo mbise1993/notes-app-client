@@ -92,7 +92,14 @@ export const Note = () => {
       return;
     }
 
-    setIsDeleting(true);
+    try {
+      setIsDeleting(true);
+      await API.del('notes', `/notes/${id}`);
+      navigate('/');
+    } catch (e) {
+      Errors.handle(e);
+      setIsDeleting(false);
+    }
   };
 
   return (
