@@ -12,6 +12,7 @@ import { SignUp } from './containers/SignUp';
 import { NewNote } from './containers/NewNote';
 
 import './App.css';
+import { Note } from './containers/Note';
 
 function App() {
   const navigate = useNavigate();
@@ -82,6 +83,9 @@ function App() {
             </Route>
             <Route path="/notes/new">
               <NewNote />
+            </Route>
+            <Route path="/notes/:id">
+              <Note />
             </Route>
             <Route path="*">
               <NotFound />

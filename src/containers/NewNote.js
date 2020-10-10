@@ -77,6 +77,7 @@ export const NewNote = () => {
         <LoadingButton
           block
           type="submit"
+          variant="primary"
           loading={isLoading}
           disabled={!validateForm()}
         >
